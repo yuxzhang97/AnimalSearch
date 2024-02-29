@@ -9,15 +9,15 @@ import { CartProvider } from "../contexts/CartContext"; // Import CartProvider
 const Pages = () => {
   return (
     <ChakraProvider>
-      <BrowserRouter>
-        <NavBar />
-        <CartProvider> {/* Wrap the Routes with CartProvider */}
+      <CartProvider>
+        <BrowserRouter>
+          <NavBar />
           <Routes>
             <Route element={<Products />} path="/" />
             <Route element={<ProductDetails />} path="/product/:productId" />
           </Routes>
-        </CartProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </CartProvider>
     </ChakraProvider>
   );
 };
