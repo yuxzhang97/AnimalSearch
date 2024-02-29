@@ -1,0 +1,24 @@
+{
+  "name": "animalsearch",
+  "version": "1.0.0",
+  "description": "App to searh for animals using apollo and mongodb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuxzhang97/AnimalSearch.git"
+  },
+  "author": "yuxzhang97",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuxzhang97/AnimalSearch/issues"
+  },
+  "homepage": "https://github.com/yuxzhang97/AnimalSearch#readme",
+  "dependencies": {
+    "apollo-server": "^3.13.0",
+    "graphql": "^16.8.1",
+    "mongoose": "^8.2.0"
+  }
+}
