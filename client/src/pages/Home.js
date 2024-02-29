@@ -4,17 +4,20 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Products from "./products";
 import ProductDetails from "./ProductDetails";
 import NavBar from "../components/NavBar";
+import { CartProvider } from "../contexts/CartContext";
 
 const Pages = () => {
   return (
     <ChakraProvider>
-      <BrowserRouter>
-        <NavBar />
-        <Routes>
-          <Route element={<Products />} path="/" />
-          <Route element={<ProductDetails />} path="/product/:productId" />
-        </Routes>
-      </BrowserRouter>
+      <CartProvider>
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route element={<Products />} path="/" />
+            <Route element={<ProductDetails />} path="/product/:productId" />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
     </ChakraProvider>
   );
 };
