@@ -1,0 +1,38 @@
+[
+  {
+    "_id": "65e0be9835bf98132f8029b5",
+    "name": "Smartphone",
+    "description": "High-performance smartphone with advanced features.",
+    "price": 499.99,
+    "category": "Electronics",
+    "imageURL": "https://example.com/smartphone.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "_id": "65e0be9835bf98132f8029b6",
+    "name": "Laptop",
+    "description": "Powerful laptop for work and entertainment.",
+    "price": 1099.99,
+    "category": "Electronics",
+    "imageURL": "https://example.com/laptop.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "_id": "65e0be9835bf98132f8029b7",
+    "name": "Running Shoes",
+    "description": "Comfortable and durable running shoes.",
+    "price": 89.99,
+    "category": "Footwear",
+    "imageURL": "https://example.com/runningshoes.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "_id": "65e0be9835bf98132f8029b8",
+    "name": "T-shirt",
+    "description": "Casual cotton t-shirt for everyday wear.",
+    "price": 19.99,
+    "category": "Clothing",
+    "imageURL": "https://example.com/tshirt.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  }
+]
