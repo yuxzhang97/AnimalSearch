@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLazyQuery, gql } from '@apollo/client';
-import { Input, Button, Spinner, Box, Image, Heading, Text, Flex } from '@chakra-ui/react';
+import { Input, Button, Spinner, Box, Flex } from '@chakra-ui/react';
+import ProductCard from '../components/ProductCard';
 
 const SEARCH_PRODUCTS = gql`
   query SearchProducts($query: String!) {
@@ -15,7 +16,7 @@ const SEARCH_PRODUCTS = gql`
   }
 `;
 
-const ProductSearch = () => {
+const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchProducts, { loading, error, data }] = useLazyQuery(SEARCH_PRODUCTS);
 
@@ -49,15 +50,7 @@ const ProductSearch = () => {
       {data && (
         <Flex flexWrap="wrap">
           {data.searchProducts.map(product => (
-            <Box key={product._id} borderWidth="1px" borderRadius="lg" overflow="hidden" p={2} m={2} width="300px" height="400px">
-              <Image src={product.imageURL} alt={product.name} height="200px" objectFit="cover" />
-              <Box mt={2}>
-                <Heading as="h3" size="md" mb={1}>{product.name}</Heading>
-                <Text fontSize="sm" mb={1}>{product.description}</Text>
-                <Text fontSize="sm" fontWeight="bold" mb={1}>Price: ${product.price}</Text>
-                <Text fontSize="sm" fontStyle="italic">Category: {product.category}</Text>
-              </Box>
-            </Box>
+            <ProductCard key={product._id} product={product} />
           ))}
         </Flex>
       )}
@@ -65,4 +58,4 @@ const ProductSearch = () => {
   );
 };
 
-export default ProductSearch;
+export default Products;
