@@ -1,2 +1,2 @@
-# AnimalSearch
-App to search animals using Apollo and MongoDB
+# E-Commerce
+App to search products and buy them using React Apollo and MongoDB
