@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { Box, Heading, Text, Image, Spinner } from '@chakra-ui/react';
 
 /** PRODUCTS gql query to retrieve all products */
 const PRODUCTS = gql`
@@ -21,21 +22,32 @@ const PRODUCTS = gql`
 const Products = () => {
   const { loading, error, data } = useQuery(PRODUCTS);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner size="xl" />;
+
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div>
+    <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(250px, 1fr))" gap={6} p={4}>
       {data?.products?.map(product => (
-        <div key={product._id}>
-          <h2>{product.name}</h2>
-          <p>{product.description}</p>
-          <p>Price: ${product.price}</p>
-          <p>Category: {product.category}</p>
-          <img src={product.imageURL} alt={product.name} />
-        </div>
+        <Box key={product._id} borderWidth="1px" borderRadius="lg" overflow="hidden">
+          <Image src={product.imageURL} alt={product.name} />
+          <Box p="6">
+            <Heading as="h3" size="md" mb={2}>
+              {product.name}
+            </Heading>
+            <Text fontSize="sm" mb={2}>
+              {product.description}
+            </Text>
+            <Text fontWeight="bold" mb={2}>
+              Price: ${product.price}
+            </Text>
+            <Text fontSize="sm" fontStyle="italic">
+              Category: {product.category}
+            </Text>
+          </Box>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 };
 
