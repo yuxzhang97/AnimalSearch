@@ -1,9 +1,10 @@
 {
   "name": "animalsearch",
   "version": "1.0.0",
-  "description": "App to searh for animals using apollo and mongodb",
-  "main": "index.js",
+  "description": "App to search for animals using Apollo and MongoDB",
+  "main": "src/index.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
