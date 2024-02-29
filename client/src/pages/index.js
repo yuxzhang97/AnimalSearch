@@ -1,11 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-/** importing our pages */
 import Products from "./products";
 import ProductDetails from "./ProductDetails";
 
-export default function Pages() {
+const Pages = () => {
   return (
     <ChakraProvider>
       <BrowserRouter>
@@ -16,4 +15,6 @@ export default function Pages() {
       </BrowserRouter>
     </ChakraProvider>
   );
-}
+};
+
+export default Pages;
