@@ -30,7 +30,6 @@ const ProductDetails = () => {
 
   return (
     <Box maxW="800px" mx="auto" p="4">
-      <Heading as="h1" size="xl" mb="4">Product Details</Heading>
       <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="4">
         <Image src={product.imageURL} alt={product.name} mb="4" />
         <Heading as="h2" size="lg" mb="2">{product.name}</Heading>

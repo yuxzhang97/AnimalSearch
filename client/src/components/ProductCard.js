@@ -18,9 +18,7 @@ const ProductCard = ({ product }) => {
         <Image src={product.imageURL} alt={product.name} height="200px" objectFit="cover" />
         <Box mt={2}>
           <Heading as="h3" size="md" mb={1}>{product.name}</Heading>
-          <Text fontSize="sm" mb={1}>{product.description}</Text>
           <Text fontSize="sm" fontWeight="bold" mb={1}>Price: ${product.price}</Text>
-          <Text fontSize="sm" fontStyle="italic">Category: {product.category}</Text>
         </Box>
       </Box>
     </Link>
