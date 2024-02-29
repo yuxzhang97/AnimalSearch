@@ -1,15 +1,19 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
-  type Animal {
-    id: ID!
+  type Product {
+    _id: ID!
     name: String!
-    type: String!
     description: String!
+    price: Float!
+    category: String!
+    imageURL: String!
   }
 
   type Query {
-    animals: [Animal]
+    products: [Product]
+    product(_id: ID!): Product
+    productsByCategory(category: String!): [Product] 
   }
 `;
 
