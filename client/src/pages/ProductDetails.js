@@ -1,5 +1,3 @@
-// ProductDetails.js
-
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
@@ -27,9 +25,9 @@ const ProductDetails = () => {
     variables: { _id: productId },
   });
 
-  const handleAddToCart = () => {
-    // Add the product to the cart
-    addToCart(productId);
+  const handleAddToCart = (product) => {
+    // Add the entire product object to the cart
+    addToCart(product);
     alert('Product added to cart!');
   };
 
@@ -46,7 +44,7 @@ const ProductDetails = () => {
         <Text fontSize="md" mb="2">{product.description}</Text>
         <Text fontSize="lg" fontWeight="bold" mb="2">Price: ${product.price}</Text>
         <Text fontSize="lg" fontStyle="italic">Category: {product.category}</Text>
-        <Button onClick={handleAddToCart} colorScheme="teal" mt="4">Add to Cart</Button> {/* Add button to add product to cart */}
+        <Button onClick={() => handleAddToCart(product)} colorScheme="teal" mt="4">Add to Cart</Button> {/* Add button to add product to cart */}
       </Box>
     </Box>
   );

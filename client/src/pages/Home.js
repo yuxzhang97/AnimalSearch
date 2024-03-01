@@ -5,6 +5,7 @@ import Products from "./products";
 import ProductDetails from "./ProductDetails";
 import NavBar from "../components/NavBar";
 import { CartProvider } from "../contexts/CartContext"; // Import CartProvider
+import Cart from "../components/Cart";
 
 const Pages = () => {
   return (
@@ -16,6 +17,7 @@ const Pages = () => {
             <Route element={<Products />} path="/" />
             <Route element={<ProductDetails />} path="/product/:productId" />
           </Routes>
+          <Cart></Cart>
         </BrowserRouter>
       </CartProvider>
     </ChakraProvider>
