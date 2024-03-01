@@ -55,11 +55,13 @@ const useAddToCart = () => {
   const addToCart = async (userId, productId, quantity) => {
     try {
       // Call the addToCart mutation with the provided parameters
+      console.log(userId, productId, quantity);
       const { data } = await addToCartMutation({
         variables: { userId, productId, quantity },
       });
       return data.updateCartItem; // Return the updated user object with cart details
     } catch (error) {
+        console.log("here");
       throw new Error(error.message);
     }
   };
