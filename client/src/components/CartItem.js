@@ -1,17 +1,28 @@
-import React from "react";
-import { Flex, Image, Select, Button } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Flex, Image, Button } from "@chakra-ui/react";
 import { useCart } from "../contexts/CartContext";
 import { DeleteIcon } from "@chakra-ui/icons";
+import {
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+} from "@chakra-ui/react";
 
 const CartItem = ({ item }) => {
   const { updateQuantity, removeFromCart } = useCart();
+  const [inputQuantity, setInputQuantity] = useState(item.quantity);
 
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseInt(event.target.value);
-    if (newQuantity === 0) {
-      removeFromCart(item._id);
-    } else {
+  useEffect(() => {
+    setInputQuantity(item.quantity);
+  }, [item.quantity]);
+
+  const handleInputChange = (valueString) => {
+    const newQuantity = parseInt(valueString);
+    if (!isNaN(newQuantity) && newQuantity >= 0) {
       updateQuantity(item._id, newQuantity);
+      setInputQuantity(valueString);
     }
   };
 
@@ -20,18 +31,18 @@ const CartItem = ({ item }) => {
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
         <Image src={item.imageURL} alt={item.name} boxSize="80px" mb="2" />
         <Flex justifyContent="space-between" alignItems="center" width="100%">
-          <Select
+          <NumberInput
             size="sm"
-            value={item.quantity} // Always show the current quantity
-            onChange={handleQuantityChange}
+            min={1}
+            value={inputQuantity}
+            onChange={handleInputChange}
           >
-            <option value={0}>0 (Delete)</option>
-            {[...Array(10).keys()].map((number) => (
-              <option key={number} value={number}>
-                {number}
-              </option>
-            ))}
-          </Select>
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
           <Button size="sm" onClick={() => removeFromCart(item._id)}>
             <DeleteIcon />
           </Button>
