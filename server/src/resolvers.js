@@ -41,8 +41,7 @@ const resolvers = {
     // Mutation to update cart data
     updateCartItem: async (_, { userId, productId, quantity }) => {
       try {
-        let user = await User.findById(userId).populate("cart.product"); // Populate cart with product details
-        console.log(user);
+        let user = await User.findById(userId); // Populate cart with product details
         if (!user) {
           throw new Error("User not found!");
         }
@@ -53,7 +52,7 @@ const resolvers = {
         }
 
         const existingCartItemIndex = user.cart.findIndex(
-          (item) => String(item.productId) === String(productId)
+          (item) => String(item.product) === String(productId)
         );
 
         if (existingCartItemIndex !== -1) {
@@ -61,7 +60,7 @@ const resolvers = {
           user.cart[existingCartItemIndex].quantity = quantity;
         } else {
           // Add a new item to the cart
-          user.cart.push({ productId: String(productId), quantity: quantity });
+          user.cart.push({ product: productId, quantity: quantity });
         }
 
         user = await user.save();
@@ -80,7 +79,7 @@ const resolvers = {
         }
 
         // Filter out the cart item to be removed
-        user.cart = user.cart.filter(item => String(item.productId) !== String(productId));
+        user.cart = user.cart.filter(item => String(item.product) !== String(productId));
 
         // Save the updated user with the removed item
         user = await user.save();

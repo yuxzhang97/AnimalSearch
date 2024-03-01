@@ -2,19 +2,7 @@ import React, { useState } from 'react';
 import { useLazyQuery, gql } from '@apollo/client';
 import { Input, Button, Spinner, Box, Flex } from '@chakra-ui/react';
 import ProductCard from '../components/ProductCard';
-
-const SEARCH_PRODUCTS = gql`
-  query SearchProducts($query: String!) {
-    searchProducts(query: $query) {
-      _id
-      name
-      description
-      price
-      category
-      imageURL
-    }
-  }
-`;
+import SEARCH_PRODUCTS from '../graphql/queries';
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
