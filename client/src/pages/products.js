@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { useLazyQuery, gql } from '@apollo/client';
-import { Input, Button, Spinner, Box, Flex } from '@chakra-ui/react';
-import ProductCard from '../components/ProductCard';
-import SEARCH_PRODUCTS from '../graphql/queries';
+import React, { useState } from "react";
+import { Input, Button, Spinner, Box, Flex } from "@chakra-ui/react";
+import { useSearchProducts } from "../services/productService";
+import ProductCard from "../components/ProductCard";
+
 
 const Products = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchProducts, { loading, error, data }] = useLazyQuery(SEARCH_PRODUCTS);
+  const [searchTerm, setSearchTerm] = useState("");
+  const { loading, error, data, searchProducts } = useSearchProducts();
 
   const handleSearch = () => {
-    searchProducts({ variables: { query: searchTerm } });
+    searchProducts(searchTerm);
   };
 
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSearch();
     }
   };
@@ -28,16 +28,22 @@ const Products = () => {
         onKeyPress={handleKeyPress}
         mb={4}
       />
-      <Button onClick={handleSearch} colorScheme="teal" variant="solid" size="sm" mb={4}>
+      <Button
+        onClick={handleSearch}
+        colorScheme="teal"
+        variant="solid"
+        size="sm"
+        mb={4}
+      >
         Search
       </Button>
 
       {loading && <Spinner size="md" color="teal.500" mt={4} />}
       {error && <p>Error: {error.message}</p>}
-      
+
       {data && (
         <Flex flexWrap="wrap">
-          {data.searchProducts.map(product => (
+          {data.searchProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </Flex>
