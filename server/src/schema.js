@@ -6,7 +6,7 @@ const typeDefs = gql`
     _id: ID!
     "The product's name"
     name: String!
-    "Some information abotu the product"
+    "Some information about the product"
     description: String!
     "The price of the product"
     price: Float!
@@ -24,6 +24,24 @@ const typeDefs = gql`
     getProductByID(_id: ID!): Product
     "Query to search for products based on a search query"
     searchProducts(query: String!): [Product]
+  }
+
+  type User {
+    _id: ID!
+    username: String!
+    email: String!
+    password: String!
+    cart: [CartItem!]!
+  }
+
+  type CartItem {
+    product: Product!
+    quantity: Int!
+  }
+
+  type Mutation {
+    "Mutation to update a user's cart item"
+    updateCartItem(userId: ID!, productId: ID!, quantity: Int!): User
   }
 `;
 

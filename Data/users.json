@@ -1,0 +1,47 @@
+[
+    {
+      "_id": "65e0be9835bf98132f8029b5",
+      "username": "john_doe",
+      "email": "john@example.com",
+      "password": "hashed_password",
+      "cart": [
+        {
+          "productId": "65e0be9835bf98132f8029b5",
+          "quantity": 2
+        },
+        {
+          "productId": "65e0be9835bf98132f8029b6",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "_id": "65e0be9835bf98132f8029b6",
+      "username": "jane_smith",
+      "email": "jane@example.com",
+      "password": "hashed_password",
+      "cart": [
+        {
+          "productId": "65e0be9835bf98132f8029b5",
+          "quantity": 3
+        },
+        {
+          "productId": "65e0be9835bf98132f8029b8",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "_id": "65e0be9835bf98132f8029b7",
+      "username": "alex_johnson",
+      "email": "alex@example.com",
+      "password": "hashed_password",
+      "cart": [
+        {
+          "productId": "65e0be9835bf98132f8029b6",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+  
