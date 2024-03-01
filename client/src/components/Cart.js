@@ -1,36 +1,16 @@
 import React from 'react';
-import { Box, Text, Image, Flex, Button } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
+import CartItem from './CartItem';
 import { useCart } from '../contexts/CartContext';
 
 const Cart = () => {
-  const { cart, addToCart, removeFromCart, decreaseQuantity } = useCart();
-
-  const handleAdd = (item) => {
-    addToCart(item);
-  };
-
-  const handleRemove = (item) => {
-    removeFromCart(item._id);
-  };
-
-  const handleDecreaseQuantity = (item) => {
-    decreaseQuantity(item._id);
-  };
+  const { cart, decreaseQuantity, removeFromCart } = useCart();
 
   return (
-    <Box flex="1" bg="gray.100" p="4" ml="4">
+    <Box position="fixed" top="0" right="0" bottom="0" bg="gray.100" p="4" display="flex" flexDirection="column" alignItems="flex-end" overflowY="auto" width="200px"> {/* Add position and CSS properties to position the cart */}
       <Text fontSize="lg" fontWeight="bold" mb="4">Cart</Text>
       {cart.map(item => (
-        <Box key={item._id} mb="2">
-          <Flex alignItems="center">
-            <Image src={item.imageURL} alt={item.name} boxSize="50px" mr="2" />
-            <Text>{item.name} x {item.quantity}</Text>
-            <Text ml="2">${(item.price * item.quantity).toFixed(2)}</Text>
-            <Button size="sm" colorScheme="teal" ml="2" onClick={() => handleAdd(item)}>+</Button>
-            <Button size="sm" colorScheme="red" ml="2" onClick={() => handleDecreaseQuantity(item)}>-</Button> {/* Button to decrease quantity */}
-            <Button size="sm" colorScheme="red" ml="2" onClick={() => handleRemove(item)}>Remove</Button>
-          </Flex>
-        </Box>
+        <CartItem key={item._id} item={item} decreaseQuantity={decreaseQuantity} removeFromCart={removeFromCart} />
       ))}
     </Box>
   );

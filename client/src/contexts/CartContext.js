@@ -23,21 +23,18 @@ export const CartProvider = ({ children }) => {
     setCart(updatedCart);
   };
 
-  const decreaseQuantity = (productId) => {
-    const existingProductIndex = cart.findIndex(item => item._id === productId);
-    if (existingProductIndex !== -1) {
-      const updatedCart = [...cart];
-      if (updatedCart[existingProductIndex].quantity > 1) {
-        updatedCart[existingProductIndex].quantity -= 1;
-        setCart(updatedCart);
-      } else {
-        removeFromCart(productId); // If quantity is 1, remove the item from the cart
+  const updateQuantity = (productId, newQuantity) => {
+    const updatedCart = cart.map(item => {
+      if (item._id === productId) {
+        return { ...item, quantity: newQuantity };
       }
-    }
+      return item;
+    });
+    setCart(updatedCart);
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, decreaseQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
       {children}
     </CartContext.Provider>
   );
