@@ -42,6 +42,8 @@ const typeDefs = gql`
   type Mutation {
     "Mutation to update a user's cart item"
     updateCartItem(userId: ID!, productId: ID!, quantity: Int!): User
+    "Mutation to remove product from cart"
+    removeCartItem(userId: ID!, productId: ID!): User
   }
 `;
 

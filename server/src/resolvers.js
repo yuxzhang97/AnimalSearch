@@ -3,6 +3,7 @@ const User = require("./models/User");
 
 const resolvers = {
   Query: {
+    // Query to get all products in collection
     getAllProducts: async () => {
       try {
         const products = await Product.find();
@@ -11,6 +12,7 @@ const resolvers = {
         throw new Error("Error fetching all products");
       }
     },
+    // Query product by ID
     getProductByID: async (_, { _id }) => {
       try {
         const product = await Product.findById(_id);
@@ -22,6 +24,7 @@ const resolvers = {
         throw new Error("Error fetching product");
       }
     },
+    // Query to search product collection given query string
     searchProducts: async (_, { query }) => {
       const regex = new RegExp(query, "i");
       const products = await Product.find({
@@ -35,9 +38,11 @@ const resolvers = {
     },
   },
   Mutation: {
+    // Mutation to update cart data
     updateCartItem: async (_, { userId, productId, quantity }) => {
       try {
-        let user = await User.findById(userId);
+        let user = await User.findById(userId).populate("cart.product"); // Populate cart with product details
+        console.log(user);
         if (!user) {
           throw new Error("User not found!");
         }
@@ -56,9 +61,28 @@ const resolvers = {
           user.cart[existingCartItemIndex].quantity = quantity;
         } else {
           // Add a new item to the cart
-          user.cart.push({ productId: String(productId), quantity: quantity }); // Ensure productId is treated as a string
+          user.cart.push({ productId: String(productId), quantity: quantity });
         }
 
+        user = await user.save();
+        return user;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+    // Mutation to remove an item from the cart
+    removeCartItem: async (_, { userId, productId }) => {
+      try {
+        let user = await User.findById(userId).populate("cart.product"); // Populate cart with product details
+
+        if (!user) {
+          throw new Error("User not found!");
+        }
+
+        // Filter out the cart item to be removed
+        user.cart = user.cart.filter(item => String(item.productId) !== String(productId));
+
+        // Save the updated user with the removed item
         user = await user.save();
         return user;
       } catch (error) {
