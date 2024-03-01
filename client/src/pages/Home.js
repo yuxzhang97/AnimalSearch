@@ -17,7 +17,7 @@ const Pages = () => {
             <Route element={<Products />} path="/" />
             <Route element={<ProductDetails />} path="/product/:productId" />
           </Routes>
-          <Cart></Cart>
+          <Cart/>
         </BrowserRouter>
       </CartProvider>
     </ChakraProvider>

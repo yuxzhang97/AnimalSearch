@@ -28,7 +28,6 @@ const ProductDetails = () => {
   const handleAddToCart = (product) => {
     // Add the entire product object to the cart
     addToCart(product);
-    alert('Product added to cart!');
   };
 
   if (loading) return <p>Loading...</p>;
