@@ -24,6 +24,8 @@ const typeDefs = gql`
     getProductByID(_id: ID!): Product
     "Query to search for products based on a search query"
     searchProducts(query: String!): [Product]
+    "Query to get the cart and the product details for a user"
+    getUserCart(userId: ID!): [CartItem]
   }
 
   type User {

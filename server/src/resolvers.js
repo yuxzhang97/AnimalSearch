@@ -36,6 +36,19 @@ const resolvers = {
       });
       return products;
     },
+    //Gets the cart and all product details given a user
+    getUserCart: async (_, { userId }) => {
+      try {
+        let user = await User.findById(userId).populate("cart.product");
+        if (!user) {
+          throw new Error("User not found!");
+        }
+        // Save the updated user with the removed item
+        return user.cart;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
   },
   Mutation: {
     // Mutation to update cart data
