@@ -1,6 +1,23 @@
 // services/cartService.js
 
-import { useMutation, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
+
+// GraphQL query for fetching the user's cart items
+const GET_USER_CART = gql`
+  query GetUserCart($userId: ID!) {
+    getUserCart(userId: $userId) {
+      product {
+        _id
+        name
+        description
+        price
+        category
+        imageURL
+      }
+      quantity
+    }
+  }
+`;
 
 // GraphQL mutation for adding an item to the cart
 const ADD_TO_CART = gql`
@@ -52,17 +69,25 @@ const REMOVE_FROM_CART = gql`
   }
 `;
 
+// Custom hook to fetch user's cart items
+const useGetUserCart = (userId) => {
+  const { loading, error, data } = useQuery(GET_USER_CART, {
+    variables: { userId },
+  });
+
+  return { loading, error, cartItems: data ? data.getUserCart : [] };
+};
+
 // Custom hook to add an item to the cart
 const useAddToCart = () => {
   const [addToCartMutation] = useMutation(ADD_TO_CART);
 
   const addToCart = async (userId, productId, quantity) => {
     try {
-      // Call the addToCart mutation with the provided parameters
       const { data } = await addToCartMutation({
         variables: { userId, productId, quantity },
       });
-      return data.updateCartItem; // Return the updated user object with cart details
+      return data.updateCartItem;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -77,11 +102,10 @@ const useRemoveFromCart = () => {
 
   const removeFromCart = async (userId, productId) => {
     try {
-      // Call the removeFromCart mutation with the provided parameters
       const { data } = await removeFromCartMutation({
         variables: { userId, productId },
       });
-      return data.removeCartItem; // Return the updated user object with cart details
+      return data.removeCartItem;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -91,4 +115,4 @@ const useRemoveFromCart = () => {
 };
 
 // Export the custom hooks for use in components
-export { useAddToCart, useRemoveFromCart };
+export { useGetUserCart, useAddToCart, useRemoveFromCart };

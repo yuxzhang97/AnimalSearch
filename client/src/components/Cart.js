@@ -1,13 +1,21 @@
-import React from 'react';
-import { Box, Text } from '@chakra-ui/react';
-import CartItem from './CartItem';
-import { useCart } from '../contexts/CartContext';
+import React from "react";
+import { Box, Text } from "@chakra-ui/react";
+import CartItem from "./CartItem";
+import { useGetUserCart } from "../services/cartServices";
+import { useUser } from "../contexts/UserContext";
 
 const Cart = () => {
-  const { cart, decreaseQuantity, removeFromCart } = useCart();
+  const { userId } = useUser();
+  const { loading, error, cartItems } = useGetUserCart(userId); // Use useGetUserCart hook to fetch cart items
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   // Calculate subtotal
-  const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  );
 
   return (
     <Box
@@ -22,10 +30,20 @@ const Cart = () => {
       boxShadow="md"
       borderRadius="md"
     >
-      <Text fontSize="xl" fontWeight="bold" mb="2" textAlign="center">Subtotal:</Text>
-      <Text fontSize="xl" fontWeight="bold" color="red" mb="4" textAlign="center">${subtotal.toFixed(2)}</Text>
-      {cart.map(item => (
-        <CartItem key={item._id} item={item} decreaseQuantity={decreaseQuantity} removeFromCart={removeFromCart} />
+      <Text fontSize="xl" fontWeight="bold" mb="2" textAlign="center">
+        Subtotal:
+      </Text>
+      <Text
+        fontSize="xl"
+        fontWeight="bold"
+        color="red"
+        mb="4"
+        textAlign="center"
+      >
+        ${subtotal.toFixed(2)}
+      </Text>
+      {cartItems.map((item) => (
+        <CartItem key={item.product._id} item={item} />
       ))}
     </Box>
   );
