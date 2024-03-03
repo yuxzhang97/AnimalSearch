@@ -6,20 +6,23 @@ import ProductDetails from "./ProductDetails";
 import NavBar from "../components/NavBar";
 import { CartProvider } from "../contexts/CartContext"; // Import CartProvider
 import Cart from "../components/Cart";
+import { UserProvider } from "../contexts/UserContext";
 
 const Pages = () => {
   return (
     <ChakraProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route element={<Products />} path="/" />
-            <Route element={<ProductDetails />} path="/product/:productId" />
-          </Routes>
-          <Cart/>
-        </BrowserRouter>
-      </CartProvider>
+      <UserProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <NavBar />
+            <Routes>
+              <Route element={<Products />} path="/" />
+              <Route element={<ProductDetails />} path="/product/:productId" />
+            </Routes>
+            <Cart />
+          </BrowserRouter>
+        </CartProvider>
+      </UserProvider>
     </ChakraProvider>
   );
 };
