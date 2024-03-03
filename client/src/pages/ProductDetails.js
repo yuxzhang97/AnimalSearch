@@ -2,21 +2,20 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Image, Heading, Text, Button, Spinner } from '@chakra-ui/react';
 import { useGetProductDetails } from '../services/productService';
-import { useAddToCart } from '../services/cartServices'; // Import the useAddToCart hook
+import { useAddToCart, useUpdateCartItem } from '../services/cartServices'; // Import the useAddToCart hook
 import { useUser } from '../contexts/UserContext';
+import { useGetUserCart } from '../services/cartServices';
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const { loading, error, product } = useGetProductDetails(productId);
-  const addToCart = useAddToCart(); // Use the useAddToCart hook
-  const {userId} = useUser();  
+  const {userId} = useUser();
+  const addToCart = useAddToCart();
 
   const handleAddToCart = async (product) => {
-    let newQuantity = product.quantity?product.quantity+1:54;
     try {
       // Call the addToCart function to add the product to the cart
-      await addToCart(userId, product._id, newQuantity); // Pass the product ID and quantity, User id hardcoded for now
-      // Optionally, you can show a success message or update the UI in some way
+      await addToCart(userId, product._id, );
       console.log('Product added to cart successfully');
     } catch (error) {
       console.error('Error adding product to cart:', error.message);

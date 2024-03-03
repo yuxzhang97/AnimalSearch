@@ -113,6 +113,38 @@ const resolvers = {
         throw new Error(error.message);
       }
     },
+    // Mutation to add an item to the cart or increase its quantity by 1
+    addToCart: async (_, { userId, productId }) => {
+      try {
+        let user = await User.findById(userId).populate("cart.product");
+        
+        if (!user) {
+          throw new Error("User not found!");
+        }
+
+        let product = await Product.findById(productId);
+        if (!product) {
+          throw new Error("Product not found!");
+        }
+
+        const existingCartItemIndex = user.cart.findIndex(
+          (item) => String(item.product._id) === String(productId)
+        );
+
+        if (existingCartItemIndex !== -1) {
+          // Increment the quantity of the existing cart item by 1
+          user.cart[existingCartItemIndex].quantity += 1;
+        } else {
+          // Add a new item to the cart with quantity 1
+          user.cart.push({ product: productId, quantity: 1 });
+        }
+
+        user = await user.save();
+        return user;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
   },
 };
 

@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 
 const CartItem = ({ item }) => {
-  console.log(item);
   const { updateQuantity, removeFromCart } = useCart();
   const [inputQuantity, setInputQuantity] = useState(item.quantity);
 
@@ -30,7 +29,12 @@ const CartItem = ({ item }) => {
   return (
     <Flex key={item._id} alignItems="center" mb="2" width="100%">
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
-        <Image src={item.product.imageURL} alt={item.product.name} boxSize="80px" mb="2" />
+        <Image
+          src={item.product.imageURL}
+          alt={item.product.name}
+          boxSize="80px"
+          mb="2"
+        />
         <Flex justifyContent="space-between" alignItems="center" width="100%">
           <NumberInput
             size="sm"

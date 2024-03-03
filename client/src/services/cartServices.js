@@ -21,7 +21,32 @@ const GET_USER_CART = gql`
 
 // GraphQL mutation for adding an item to the cart
 const ADD_TO_CART = gql`
-  mutation AddToCart($userId: ID!, $productId: ID!, $quantity: Int!) {
+  mutation AddToCart($userId: ID!, $productId: ID!) {
+    addToCart(userId: $userId, productId: $productId) {
+      _id
+      firstName
+      lastName
+      username
+      email
+      password
+      cart {
+        product {
+          _id
+          name
+          description
+          price
+          category
+          imageURL
+        }
+        quantity
+      }
+    }
+  }
+`;
+
+// GraphQL mutation for updating an item in the cart
+const UPDATE_CART_ITEM = gql`
+  mutation UpdateCartItem($userId: ID!, $productId: ID!, $quantity: Int!) {
     updateCartItem(userId: $userId, productId: $productId, quantity: $quantity) {
       _id
       firstName
@@ -82,9 +107,27 @@ const useGetUserCart = (userId) => {
 const useAddToCart = () => {
   const [addToCartMutation] = useMutation(ADD_TO_CART);
 
-  const addToCart = async (userId, productId, quantity) => {
+  const addToCart = async (userId, productId) => {
     try {
       const { data } = await addToCartMutation({
+        variables: { userId, productId },
+      });
+      return data.addToCart;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return addToCart;
+};
+
+// Custom hook to update an item in the cart
+const useUpdateCartItem = () => {
+  const [updateCartItemMutation] = useMutation(UPDATE_CART_ITEM);
+
+  const updateCartItem = async (userId, productId, quantity) => {
+    try {
+      const { data } = await updateCartItemMutation({
         variables: { userId, productId, quantity },
       });
       return data.updateCartItem;
@@ -93,8 +136,9 @@ const useAddToCart = () => {
     }
   };
 
-  return addToCart;
+  return updateCartItem;
 };
+
 
 // Custom hook to remove an item from the cart
 const useRemoveFromCart = () => {
@@ -115,4 +159,4 @@ const useRemoveFromCart = () => {
 };
 
 // Export the custom hooks for use in components
-export { useGetUserCart, useAddToCart, useRemoveFromCart };
+export { useGetUserCart, useAddToCart, useUpdateCartItem, useRemoveFromCart };
