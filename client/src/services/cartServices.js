@@ -7,6 +7,8 @@ const ADD_TO_CART = gql`
   mutation AddToCart($userId: ID!, $productId: ID!, $quantity: Int!) {
     updateCartItem(userId: $userId, productId: $productId, quantity: $quantity) {
       _id
+      firstName
+      lastName
       username
       email
       password
@@ -30,6 +32,8 @@ const REMOVE_FROM_CART = gql`
   mutation RemoveFromCart($userId: ID!, $productId: ID!) {
     removeCartItem(userId: $userId, productId: $productId) {
       _id
+      firstName
+      lastName
       username
       email
       password

@@ -36,6 +36,18 @@ const resolvers = {
       });
       return products;
     },
+    getUser: async (_, { userId }) => {
+      try {
+        let user = await User.findById(userId)
+        if (!user) {
+          throw new Error("User not found!");
+        }
+        // Save the updated user with the removed item
+        return user;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
     //Gets the cart and all product details given a user
     getUserCart: async (_, { userId }) => {
       try {

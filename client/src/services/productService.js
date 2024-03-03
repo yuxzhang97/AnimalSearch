@@ -48,7 +48,6 @@ const useGetProductDetails = (productId) => {
   const { loading, error, data } = useQuery(GET_PRODUCT_DETAILS, {
     variables: { _id: productId },
   });
-
   return { loading, error, product: data ? data.getProductByID : null };
 };
 

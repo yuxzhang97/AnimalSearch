@@ -1,17 +1,23 @@
 [
     {
+      "firstName": "John",
+      "lastName": "Doe",
       "username": "john_doe",
       "email": "john@example.com",
       "password": "hashed_password",
       "cart": []
     },
     {
+      "firstName": "Jane",
+      "lastName": "Smith",
       "username": "jane_smith",
       "email": "jane@example.com",
       "password": "hashed_password",
       "cart": []
     },
     {
+      "firstName": "Alex",
+      "lastName": "Johnson",
       "username": "alex_johnson",
       "email": "alex@example.com",
       "password": "hashed_password",
