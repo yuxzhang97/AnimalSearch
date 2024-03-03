@@ -1,5 +1,3 @@
-// services/cartService.js
-
 import { useQuery, gql, useMutation } from '@apollo/client';
 
 // GraphQL query for fetching the user's cart items
@@ -96,22 +94,23 @@ const REMOVE_FROM_CART = gql`
 
 // Custom hook to fetch user's cart items
 const useGetUserCart = (userId) => {
-  const { loading, error, data } = useQuery(GET_USER_CART, {
+  const { loading, error, data, refetch } = useQuery(GET_USER_CART, {
     variables: { userId },
   });
 
-  return { loading, error, cartItems: data ? data.getUserCart : [] };
+  return { loading, error, cartItems: data ? data.getUserCart : [], refetch };
 };
 
 // Custom hook to add an item to the cart
 const useAddToCart = () => {
   const [addToCartMutation] = useMutation(ADD_TO_CART);
 
-  const addToCart = async (userId, productId) => {
+  const addToCart = async (userId, productId, refetch) => {
     try {
       const { data } = await addToCartMutation({
         variables: { userId, productId },
       });
+      await refetch(); // Refetch the cart
       return data.addToCart;
     } catch (error) {
       throw new Error(error.message);
@@ -125,11 +124,12 @@ const useAddToCart = () => {
 const useUpdateCartItem = () => {
   const [updateCartItemMutation] = useMutation(UPDATE_CART_ITEM);
 
-  const updateCartItem = async (userId, productId, quantity) => {
+  const updateCartItem = async (userId, productId, quantity, refetch) => {
     try {
       const { data } = await updateCartItemMutation({
         variables: { userId, productId, quantity },
       });
+      await refetch(); // Refetch the cart
       return data.updateCartItem;
     } catch (error) {
       throw new Error(error.message);
@@ -144,11 +144,12 @@ const useUpdateCartItem = () => {
 const useRemoveFromCart = () => {
   const [removeFromCartMutation] = useMutation(REMOVE_FROM_CART);
 
-  const removeFromCart = async (userId, productId) => {
+  const removeFromCart = async (userId, productId, refetch) => {
     try {
       const { data } = await removeFromCartMutation({
         variables: { userId, productId },
       });
+      await refetch(); // Refetch the cart
       return data.removeCartItem;
     } catch (error) {
       throw new Error(error.message);
