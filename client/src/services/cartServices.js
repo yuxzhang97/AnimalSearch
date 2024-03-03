@@ -18,6 +18,8 @@ const GET_USER_CART = gql`
 `;
 
 // GraphQL mutation for adding an item to the cart
+//Known bug if you try to get the cart when you add the first of an item, it doesn't get it properly and it returns an error
+
 const ADD_TO_CART = gql`
   mutation AddToCart($userId: ID!, $productId: ID!) {
     addToCart(userId: $userId, productId: $productId) {
@@ -27,25 +29,31 @@ const ADD_TO_CART = gql`
       username
       email
       password
-      cart {
-        product {
-          _id
-          name
-          description
-          price
-          category
-          imageURL
-        }
-        quantity
-      }
+      
     }
   }
 `;
 
 // GraphQL mutation for updating an item in the cart
+//Known bug if you try to get the cart when you add the first of an item, it doesn't get it properly and it returns an error
 const UPDATE_CART_ITEM = gql`
   mutation UpdateCartItem($userId: ID!, $productId: ID!, $quantity: Int!) {
     updateCartItem(userId: $userId, productId: $productId, quantity: $quantity) {
+      _id
+      firstName
+      lastName
+      username
+      email
+      password
+      
+    }
+  }
+`;
+
+// GraphQL mutation for removing an item from the cart
+const REMOVE_FROM_CART = gql`
+  mutation RemoveFromCart($userId: ID!, $productId: ID!) {
+    removeCartItem(userId: $userId, productId: $productId) {
       _id
       firstName
       lastName
@@ -67,10 +75,10 @@ const UPDATE_CART_ITEM = gql`
   }
 `;
 
-// GraphQL mutation for removing an item from the cart
-const REMOVE_FROM_CART = gql`
-  mutation RemoveFromCart($userId: ID!, $productId: ID!) {
-    removeCartItem(userId: $userId, productId: $productId) {
+// GraphQL mutation for subtracting the quantity of an item from the cart
+const MINUS_FROM_CART = gql`
+  mutation MinusFromCart($userId: ID!, $productId: ID!) {
+    minusFromCart(userId: $userId, productId: $productId) {
       _id
       firstName
       lastName
@@ -139,7 +147,6 @@ const useUpdateCartItem = () => {
   return updateCartItem;
 };
 
-
 // Custom hook to remove an item from the cart
 const useRemoveFromCart = () => {
   const [removeFromCartMutation] = useMutation(REMOVE_FROM_CART);
@@ -159,5 +166,24 @@ const useRemoveFromCart = () => {
   return removeFromCart;
 };
 
+// Custom hook to subtract the quantity of an item from the cart by 1
+const useMinusFromCart = () => {
+  const [minusFromCartMutation] = useMutation(MINUS_FROM_CART);
+
+  const minusFromCart = async (userId, productId, refetch) => {
+    try {
+      const { data } = await minusFromCartMutation({
+        variables: { userId, productId },
+      });
+      await refetch(); // Refetch the cart
+      return data.minusFromCart;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return minusFromCart;
+};
+
 // Export the custom hooks for use in components
-export { useGetUserCart, useAddToCart, useUpdateCartItem, useRemoveFromCart };
+export { useGetUserCart, useAddToCart, useUpdateCartItem, useRemoveFromCart, useMinusFromCart };

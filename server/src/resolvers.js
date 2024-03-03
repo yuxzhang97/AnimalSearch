@@ -145,6 +145,41 @@ const resolvers = {
         throw new Error(error.message);
       }
     },
+    minusFromCart: async (_, { userId, productId }) => {
+      try {
+        // Find the user by userId and populate the cart with product details
+        let user = await User.findById(userId).populate("cart.product");
+        // Check if user exists
+        if (!user) {
+          throw new Error("User not found!");
+        }
+
+        // Find the index of the cart item with the given productId
+        const existingCartItemIndex = user.cart.findIndex(
+          (item) => String(item.product._id) === String(productId)
+        );
+
+        // If the cart item exists
+        if (existingCartItemIndex !== -1) {
+          // If the quantity of the cart item is already 1, throw an error
+          if (user.cart[existingCartItemIndex].quantity === 1) {
+            throw new Error("Quantity cannot be less than 1!");
+          }
+          // Otherwise, decrement the quantity of the cart item by 1
+          user.cart[existingCartItemIndex].quantity -= 1;
+        } else {
+          // If the cart item does not exist, throw an error
+          throw new Error("Product not found in the cart!");
+        }
+
+        // Save the updated user with the modified cart
+        user = await user.save();
+        return user;
+      } catch (error) {
+        // Throw an error if any operation fails
+        throw new Error(error.message);
+      }
+    },
   },
 };
 

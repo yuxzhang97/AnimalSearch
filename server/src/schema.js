@@ -16,6 +16,31 @@ const typeDefs = gql`
     imageURL: String!
   }
 
+  "A User represents a registered user in the system"
+  type User {
+    _id: ID!
+    "The user's first name"
+    firstName: String!
+    "The user's last name"
+    lastName: String!
+    "The user's username"
+    username: String!
+    "The user's email address"
+    email: String!
+    "The user's password (should not be queried, only for mutation)"
+    password: String!
+    "The user's cart containing cart items"
+    cart: [CartItem!]!
+  }
+
+  "A CartItem represents a product in the user's cart along with its quantity"
+  type CartItem {
+    "The product in the cart"
+    product: Product!
+    "The quantity of the product in the cart"
+    quantity: Int!
+  }
+
   # Define the Query type with its fields
   type Query {
     "Query to retrieve all products"
@@ -25,24 +50,9 @@ const typeDefs = gql`
     "Query to search for products based on a search query"
     searchProducts(query: String!): [Product]
     "Query to get the user info by ID"
-    getUser(userId:ID!): User
+    getUser(userId: ID!): User
     "Query to get the cart and the product details for a user"
     getUserCart(userId: ID!): [CartItem]
-  }
-
-  type User {
-    _id: ID!
-    firstName: String!
-    lastName: String!
-    username: String!
-    email: String!
-    password: String!
-    cart: [CartItem!]!
-  }
-
-  type CartItem {
-    product: Product!
-    quantity: Int!
   }
 
   type Mutation {
@@ -52,6 +62,8 @@ const typeDefs = gql`
     removeCartItem(userId: ID!, productId: ID!): User
     "Mutation to add an item to the cart or increase its quantity by 1"
     addToCart(userId: ID!, productId: ID!): User
+    "Mutation to subtract the quantity of an existing item by 1 but not less than 1"
+    minusFromCart(userId: ID!, productId: ID!): User
   }
 `;
 
