@@ -1,42 +1,18 @@
-import React, { useState } from "react";
-import { Input, Button, Spinner, Box, Flex } from "@chakra-ui/react";
+import React from "react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { useSearchProducts } from "../services/productService";
 import ProductCard from "../components/ProductCard";
-
-
+import SearchBar from "../components/SearchBar";
 const Products = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   const { loading, error, data, searchProducts } = useSearchProducts();
 
-  const handleSearch = () => {
+  const handleSearch = (searchTerm) => {
     searchProducts(searchTerm);
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handleSearch();
-    }
   };
 
   return (
     <Box>
-      <Input
-        type="text"
-        placeholder="Search products..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyPress={handleKeyPress}
-        mb={4}
-      />
-      <Button
-        onClick={handleSearch}
-        colorScheme="teal"
-        variant="solid"
-        size="sm"
-        mb={4}
-      >
-        Search
-      </Button>
+      <SearchBar onSearch={handleSearch} />
 
       {loading && <Spinner size="md" color="teal.500" mt={4} />}
       {error && <p>Error: {error.message}</p>}
