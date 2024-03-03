@@ -1,16 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, HStack, Text } from '@chakra-ui/react';
 
 const NavBar = () => {
   return (
     <Box bg="teal" p="4">
-      <Flex justifyContent="space-between" alignItems="center">
+      <HStack spacing="4" justify="flex-start">
         <Link to="/">
           <Text color="white" fontWeight="bold" fontSize="xl">Home</Text>
         </Link>
-        {/* Add additional links or navigation items here */}
-      </Flex>
+        <Link to="/account">
+          <Text color="white" fontWeight="bold" fontSize="xl">Account</Text>
+        </Link>
+      </HStack>
     </Box>
   );
 };
