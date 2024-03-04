@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { useSearchProducts } from "../services/productService";
 import ProductCard from "../components/ProductCard";
@@ -9,6 +9,12 @@ const Products = () => {
   const handleSearch = (searchTerm) => {
     searchProducts(searchTerm);
   };
+  
+
+  useEffect(() => {
+    // Fetch the top 10 items only once when the component mounts
+    searchProducts("");
+  }, []); 
 
   return (
     <Box>
