@@ -30,5 +30,141 @@
     "category": "Clothing",
     "imageURL": "https://m.media-amazon.com/images/I/51slsf6EOmL._AC_UY1000_.jpg",
     "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Smartwatch",
+    "description": "Feature-packed smartwatch for tracking fitness and notifications.",
+    "price": 299.99,
+    "category": "Electronics",
+    "imageURL": "https://m.media-amazon.com/images/I/61ccxP1g8HL._AC_UF894,1000_QL80_.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Headphones",
+    "description": "High-quality wireless headphones for immersive audio experience.",
+    "price": 149.99,
+    "category": "Electronics",
+    "imageURL": "https://m.media-amazon.com/images/I/61kFsU+CYkL._AC_UF894,1000_QL80_.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Backpack",
+    "description": "Durable and spacious backpack for everyday use.",
+    "price": 49.99,
+    "category": "Accessories",
+    "imageURL": "https://m.media-amazon.com/images/I/71QkH2OISVL._AC_UF894,1000_QL80_.jpg=",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Gaming Console",
+    "description": "Latest gaming console for immersive gaming experience.",
+    "price": 399.99,
+    "category": "Electronics",
+    "imageURL": "https://i5.walmartimages.com/asr/8afbd811-ab30-412c-9b01-14adaeab5b1b.615b982cf004f849561ce3d3d3abc0e5.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Sneakers",
+    "description": "Stylish sneakers for casual outings.",
+    "price": 79.99,
+    "category": "Footwear",
+    "imageURL": "https://pyxis.nymag.com/v1/imgs/388/cda/a896a62ed3f7e2b9b36230ea5617f8abcd-11---.rsquare.w600.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Hoodie",
+    "description": "Comfortable hoodie for chilly weather.",
+    "price": 39.99,
+    "category": "Clothing",
+    "imageURL": "https://img.abercrombie.com/is/image/anf/KIC_122-3168-1427-170_prod1.jpg?policy=product-large",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Digital Camera",
+    "description": "Professional-grade digital camera for capturing stunning photos.",
+    "price": 799.99,
+    "category": "Electronics",
+    "imageURL": "https://m.media-amazon.com/images/I/61O8bsYOJIL._AC_UF894,1000_QL80_.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Yoga Mat",
+    "description": "Eco-friendly yoga mat for comfortable yoga sessions.",
+    "price": 29.99,
+    "category": "Fitness",
+    "imageURL": "https://m.media-amazon.com/images/I/61FTABGJz3L.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Wireless Mouse",
+    "description": "Sleek and ergonomic wireless mouse for smooth navigation.",
+    "price": 29.99,
+    "category": "Electronics",
+    "imageURL": "https://m.media-amazon.com/images/I/617BaM8NjnL._AC_UF894,1000_QL80_.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Dumbbell Set",
+    "description": "Adjustable dumbbell set for strength training at home.",
+    "price": 149.99,
+    "category": "Fitness",
+    "imageURL": "https://www.fitnessdepot.ca/media/catalog/product/d/b/dbhr530blkfriday.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Desk Lamp",
+    "description": "Modern desk lamp for brightening up your workspace.",
+    "price": 39.99,
+    "category": "Home Decor",
+    "imageURL": "https://i.ebayimg.com/images/g/gf0AAOSwGdBkQQ2Z/s-l1200.webp",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Travel Backpack",
+    "description": "Versatile backpack for travel enthusiasts.",
+    "price": 69.99,
+    "category": "Accessories",
+    "imageURL": "https://m.media-amazon.com/images/I/7189OH8CswL.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Wireless Keyboard",
+    "description": "Slim and responsive wireless keyboard for efficient typing.",
+    "price": 49.99,
+    "category": "Electronics",
+    "imageURL": "https://media-www.canadiantire.ca/product/living/electronics/home-communications/0694793/jlab-go-wireless-keyboard-56c1ffcd-3d82-422f-a831-cc45a2906704.png",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Coffee Maker",
+    "description": "Automatic coffee maker for brewing delicious coffee.",
+    "price": 79.99,
+    "category": "Appliances",
+    "imageURL": "https://assets.wsimgs.com/wsimgs/rk/images/dp/wcm/202336/0013/cuisinart-coffee-center-2-in-1-coffee-maker-with-over-ice-o.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Bluetooth Speaker",
+    "description": "Portable Bluetooth speaker for enjoying music on the go.",
+    "price": 59.99,
+    "category": "Electronics",
+    "imageURL": "https://canada.crutchfieldonline.com/ImageHandler/trim/750/457/products/2022/8/109/g109FLIP6BK-F.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Sunglasses",
+    "description": "Stylish sunglasses for protecting your eyes from the sun.",
+    "price": 39.99,
+    "category": "Accessories",
+    "imageURL": "https://static.zennioptical.com/production/products/general/11/26/1126816-sunglasses-front-view.jpg",
+    "createdAt": "2024-02-29T12:00:00Z"
+  },
+  {
+    "name": "Electric Toothbrush",
+    "description": "Electric toothbrush for efficient oral hygiene.",
+    "price": 39.99,
+    "category": "Personal Care",
+    "imageURL": "https://images.ctfassets.net/iy5ifr0uwt25/6fdQThChlLZzis3c0PihJH/aa8969a3e5b82e166863fbd52bc61970/file.png?fm=webp&q=75",
+    "createdAt": "2024-02-29T12:00:00Z"
   }
 ]
