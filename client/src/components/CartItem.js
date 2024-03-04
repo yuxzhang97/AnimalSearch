@@ -1,50 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { Flex, Image, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Flex, Image, Button, Select, Spinner } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-} from "@chakra-ui/react";
-import { useRemoveFromCart } from "../services/cartServices";
+import { useRemoveFromCart, useUpdateCartItem } from "../services/cartServices";
 import { useUser } from "../contexts/UserContext";
 import { useGetUserCart } from "../services/cartServices";
 
-
-//Cart Item Component
+// Cart Item Component
 const CartItem = ({ item }) => {
   const removeFromCart = useRemoveFromCart();
-  const [inputQuantity, setInputQuantity] = useState(item.quantity);
+  const updateCartItem = useUpdateCartItem();
   const { userId } = useUser();
   const { refetch } = useGetUserCart(userId); // Fetch refetch function from useGetUserCart
+  const [loading, setLoading] = useState(false);
 
-
-  useEffect(() => {
-    setInputQuantity(item.quantity);
-  }, [item.quantity]);
-
-  const handleInputChange = (valueString) => {
-    const newQuantity = parseInt(valueString);
-    if (!isNaN(newQuantity) && newQuantity >= 1) {
-      // Handle quantity change
-      setInputQuantity(newQuantity);
+  const handleQuantityChange = async (event) => {
+    const newQuantity = parseInt(event.target.value);
+    setLoading(true);
+    try {
+      await updateCartItem(userId, item.product._id, newQuantity, refetch);
+    } catch (error) {
+      console.error("Error updating cart item:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleRemoveFromCart = async () => {
+    setLoading(true);
     try {
-      console.log(userId, item);
       await removeFromCart(userId, item.product._id, refetch);
       console.log('Product removed from cart successfully');
     } catch (error) {
       console.error("Error removing from cart:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Flex key={item.product._id} alignItems="center" mb="2" width="100%">
+    <Flex justifyContent="center" alignItems="center" key={item.product._id} mb="2" width="100%">
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
         <Image
           src={item.product.imageURL}
@@ -53,19 +47,23 @@ const CartItem = ({ item }) => {
           mb="2"
         />
         <Flex justifyContent="space-between" alignItems="center" width="100%">
-          <NumberInput
-            size="sm"
-            min={1}
-            value={inputQuantity}
-            onChange={handleInputChange}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <Button size="sm" onClick={handleRemoveFromCart}>
+          {loading ? (
+            <Spinner size="sm" />
+          ) : (
+            <Select
+              size="sm"
+              value={item.quantity}
+              onChange={handleQuantityChange}
+              disabled={loading}
+            >
+              {[...Array(9).keys()].map((value) => (
+                <option key={value} value={value + 1}>
+                  {value + 1}
+                </option>
+              ))}
+            </Select>
+          )}
+          <Button size="sm" onClick={handleRemoveFromCart} disabled={loading}>
             <DeleteIcon />
           </Button>
         </Flex>
