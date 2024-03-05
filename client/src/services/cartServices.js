@@ -100,6 +100,14 @@ const MINUS_FROM_CART = gql`
   }
 `;
 
+const CLEAR_USER_CART = gql`
+  mutation ClearUserCart($userId: ID!) {
+    clearUserCart(userId: $userId) {
+      _id      
+    }
+  }
+`;
+
 // Custom hook to fetch user's cart items
 const useGetUserCart = (userId) => {
   const { loading, error, data, refetch } = useQuery(GET_USER_CART, {
@@ -185,5 +193,23 @@ const useMinusFromCart = () => {
   return minusFromCart;
 };
 
+const useClearUserCart = () => {
+    const [clearUserCartMutation] = useMutation(CLEAR_USER_CART);
+  
+    const clearUserCart = async (userId, refetch) => {
+      try {
+        const { data } = await clearUserCartMutation({
+          variables: { userId },
+        });
+        await refetch(); // Refetch the cart
+        return data.clearUserCart;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    };
+  
+    return clearUserCart;
+  };
+
 // Export the custom hooks for use in components
-export { useGetUserCart, useAddToCart, useUpdateCartItem, useRemoveFromCart, useMinusFromCart };
+export { useGetUserCart, useAddToCart, useUpdateCartItem, useRemoveFromCart, useMinusFromCart, useClearUserCart };
