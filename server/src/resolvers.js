@@ -1,5 +1,6 @@
 const Product = require("./models/Product");
 const User = require("./models/User");
+const Order = require("./models/Order");
 
 const resolvers = {
   Query: {
@@ -38,7 +39,7 @@ const resolvers = {
     },
     getUser: async (_, { userId }) => {
       try {
-        let user = await User.findById(userId)
+        let user = await User.findById(userId);
         if (!user) {
           throw new Error("User not found!");
         }
@@ -67,7 +68,7 @@ const resolvers = {
     updateCartItem: async (_, { userId, productId, quantity }) => {
       try {
         let user = await User.findById(userId).populate("cart.product");
-        
+
         if (!user) {
           throw new Error("User not found!");
         }
@@ -104,7 +105,9 @@ const resolvers = {
         }
 
         // Filter out the cart item to be removed
-        user.cart = user.cart.filter(item => String(item.product._id) !== String(productId));
+        user.cart = user.cart.filter(
+          (item) => String(item.product._id) !== String(productId)
+        );
 
         // Save the updated user with the removed item
         user = await user.save();
@@ -117,7 +120,7 @@ const resolvers = {
     addToCart: async (_, { userId, productId }) => {
       try {
         let user = await User.findById(userId).populate("cart.product");
-        
+
         if (!user) {
           throw new Error("User not found!");
         }
@@ -145,6 +148,8 @@ const resolvers = {
         throw new Error(error.message);
       }
     },
+    //Subtract an item from the cart
+    //Not user anymore
     minusFromCart: async (_, { userId, productId }) => {
       try {
         // Find the user by userId and populate the cart with product details
@@ -175,6 +180,33 @@ const resolvers = {
         // Save the updated user with the modified cart
         user = await user.save();
         return user;
+      } catch (error) {
+        // Throw an error if any operation fails
+        throw new Error(error.message);
+      }
+    },
+    //Query to add an order
+    addOrder: async (_, { userId, items }) => {
+      try {
+        // Check if the user exists
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error("User not found!");
+        }
+        // Create a new order object
+        const order = new Order({
+          userId,
+          items: items.map((item) => ({
+            product: item.productId,
+            quantity: item.quantity,
+          })),
+        });
+
+        // Save the order to the database
+        const savedOrder = await order.save();
+
+        // Return the saved order
+        return savedOrder;
       } catch (error) {
         // Throw an error if any operation fails
         throw new Error(error.message);

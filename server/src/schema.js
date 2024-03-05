@@ -30,14 +30,31 @@ const typeDefs = gql`
     "The user's password (should not be queried, only for mutation)"
     password: String!
     "The user's cart containing cart items"
-    cart: [CartItem!]!
+    cart: [Item!]!
   }
 
   "A CartItem represents a product in the user's cart along with its quantity"
-  type CartItem {
+  type Item {
     "The product in the cart"
     product: Product!
     "The quantity of the product in the cart"
+    quantity: Int!
+  }
+
+  "An Order represents an order placed by a user"
+  type Order {
+    "The ID of the order"
+    _id: ID!
+    "The ID of the user who placed the order"
+    userId: ID!
+    "The array of items in the order"
+    items: [Item!]!
+  }
+
+  input ItemInput {
+    "The ID of the product"
+    productId: ID!
+    "The quantity of the product"
     quantity: Int!
   }
 
@@ -52,7 +69,7 @@ const typeDefs = gql`
     "Query to get the user info by ID"
     getUser(userId: ID!): User
     "Query to get the cart and the product details for a user"
-    getUserCart(userId: ID!): [CartItem]
+    getUserCart(userId: ID!): [Item]
   }
 
   type Mutation {
@@ -64,6 +81,8 @@ const typeDefs = gql`
     addToCart(userId: ID!, productId: ID!): User
     "Mutation to subtract the quantity of an existing item by 1 but not less than 1"
     minusFromCart(userId: ID!, productId: ID!): User
+    "Mutation to add a new order for a user"
+    addOrder(userId: ID!, items: [ItemInput!]!): Order
   }
 `;
 
