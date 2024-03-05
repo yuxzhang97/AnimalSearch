@@ -49,6 +49,8 @@ const typeDefs = gql`
     user: User!
     "The array of items in the order"
     items: [Item!]!
+    "The date the order was placed"
+    createdAt: String!
   }
 
   input ItemInput {

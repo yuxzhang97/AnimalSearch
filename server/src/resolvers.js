@@ -200,6 +200,7 @@ const resolvers = {
             product: item.productId,
             quantity: item.quantity,
           })),
+          createdAt: new Date(),
         });
 
         // Save the order to the database
