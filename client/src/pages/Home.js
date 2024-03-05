@@ -1,32 +1,37 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
-import Products from "./Products";
-import ProductDetails from "./ProductDetails";
-import Account from "./Account";
-import NavBar from "../components/NavBar";
-import { CartProvider } from "../contexts/CartContext"; // Import CartProvider
-import Cart from "../components/Cart";
-import { UserProvider } from "../contexts/UserContext";
+import React, { useEffect } from "react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { useSearchProducts } from "../services/productService";
+import ProductCard from "../components/ProductCard";
+import SearchBar from "../components/SearchBar";
+const Home = () => {
+  const { loading, error, data, searchProducts } = useSearchProducts();
 
-const Pages = () => {
+  const handleSearch = (searchTerm) => {
+    searchProducts(searchTerm);
+  };
+  
+
+  useEffect(() => {
+    // Fetch the top 10 items only once when the component mounts
+    searchProducts("");
+  }, []); 
+
   return (
-    <ChakraProvider>
-      <UserProvider>
-        <CartProvider>
-          <BrowserRouter>
-            <NavBar />
-            <Routes>
-              <Route element={<Products />} path="/" />
-              <Route element={<ProductDetails />} path="/product/:productId" />
-              <Route element={<Account />} path="/account" />
-            </Routes>
-            <Cart />
-          </BrowserRouter>
-        </CartProvider>
-      </UserProvider>
-    </ChakraProvider>
+    <Box>
+      <SearchBar onSearch={handleSearch} />
+
+      {loading && <Spinner size="md" color="teal.500" mt={4} />}
+      {error && <p>Error: {error.message}</p>}
+
+      {data && (
+        <Flex flexWrap="wrap">
+          {data.searchProducts.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </Flex>
+      )}
+    </Box>
   );
 };
 
-export default Pages;
+export default Home;
