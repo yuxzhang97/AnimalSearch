@@ -74,6 +74,7 @@ const typeDefs = gql`
     getUserCart(userId: ID!): [Item]
     "Query to get the orders for a given user"
     getUserOrders(userId: ID!): [Order!]!
+    
   }
 
   type Mutation {
@@ -87,6 +88,8 @@ const typeDefs = gql`
     minusFromCart(userId: ID!, productId: ID!): User
     "Mutation to add a new order for a user"
     addOrder(userId: ID!, items: [ItemInput!]!): Order
+    "Mutation to clear the cart of a user"
+    clearUserCart(userId: ID!): User
   }
 `;
 

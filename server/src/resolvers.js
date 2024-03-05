@@ -221,6 +221,19 @@ const resolvers = {
         throw new Error(error.message);
       }
     },
+    clearUserCart: async (_, { userId }) => {
+      try {
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error("User not found!");
+        }
+        user.cart = []; // Clear the user's cart
+        await user.save();
+        return user;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
   },
 };
 
