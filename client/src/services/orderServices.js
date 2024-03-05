@@ -1,13 +1,14 @@
-import { useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation, gql } from "@apollo/client";
 
 // Define the mutation for adding an order
 const ADD_ORDER = gql`
   mutation AddOrder($userId: ID!, $items: [ItemInput!]!) {
     addOrder(userId: $userId, items: $items) {
-      _id      
+      _id
     }
   }
 `;
+
 // Define the query for fetching user orders
 const GET_USER_ORDERS = gql`
   query GetUserOrders($userId: ID!) {
@@ -28,7 +29,7 @@ const GET_USER_ORDERS = gql`
 `;
 
 // Custom hook for adding an order
-export const useAddOrder = () => {
+const useAddOrder = () => {
   const [addOrderMutation] = useMutation(ADD_ORDER);
 
   const addOrder = async (userId, items) => {
@@ -41,8 +42,8 @@ export const useAddOrder = () => {
       });
       return data.addOrder; // Return the result of the mutation
     } catch (error) {
-      console.error('Error adding order:', error);
-      throw new Error('Error adding order'); // Handle error gracefully
+      console.error("Error adding order:", error);
+      throw new Error("Error adding order");
     }
   };
 
@@ -50,22 +51,12 @@ export const useAddOrder = () => {
 };
 
 // Custom hook for fetching user orders
-export const useGetUserOrders = () => {
-    const [getUserOrdersQuery, { loading, error, data }] = useQuery(GET_USER_ORDERS);
-  
-    const getUserOrders = async (userId) => {
-      try {
-        const { data } = await getUserOrdersQuery({
-          variables: { userId },
-        });
-        return data.getUserOrders;
-      } catch (error) {
-        console.error('Error fetching user orders:', error);
-        throw new Error('Error fetching user orders');
-      }
-    };
-  
-    return { loading, error, getUserOrders };
-  };
+const useGetUserOrders = (userId) => {
+  const { loading, error, data, refetch } = useQuery(GET_USER_ORDERS, {
+    variables: { userId },
+  });
 
-  export { useAddOrder, useGetUserOrders };
+  return { loading, error, userOrders: data ? data.getUserOrders : [], refetch };
+};
+
+export { useAddOrder, useGetUserOrders };

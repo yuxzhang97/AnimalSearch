@@ -15,6 +15,9 @@ const NavBar = () => {
         <Link to="/checkout">
           <Text color="white" fontWeight="bold" fontSize="xl">Checkout</Text>
         </Link>
+        <Link to="/orders">
+          <Text color="white" fontWeight="bold" fontSize="xl">Orders</Text>
+        </Link>
       </HStack>
     </Box>
   );
