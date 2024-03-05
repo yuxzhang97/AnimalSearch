@@ -7,12 +7,13 @@ import {
   Spinner,
   Input,
   Box,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useRemoveFromCart, useUpdateCartItem } from "../services/cartServices";
 import { useUser } from "../contexts/UserContext";
 import { useGetUserCart } from "../services/cartServices";
+import { Link } from "react-router-dom";
 
 // Cart Item Component
 const CheckoutItem = ({ item }) => {
@@ -90,16 +91,20 @@ const CheckoutItem = ({ item }) => {
       backgroundColor="white"
     >
       <Flex alignItems="center">
-        <Image
-          src={item.product.imageURL}
-          alt={item.product.name}
-          boxSize="100px"
-          mr="4"
-        />
+        <Link to={`/product/${item.product._id}`}>
+          <Image
+            src={item.product.imageURL}
+            alt={item.product.name}
+            boxSize="100px"
+            mr="4"
+          />
+        </Link>
         <Flex flexDirection="column" flex="1">
-          <Text fontWeight="bold" mb="1">
-            {item.product.name}
-          </Text>
+          <Link to={`/product/${item.product._id}`}>
+            <Text fontWeight="bold" mb="1">
+              {item.product.name}
+            </Text>
+          </Link>
           <Text fontSize="sm" mb="1">
             {item.product.description}
           </Text>
@@ -139,7 +144,9 @@ const CheckoutItem = ({ item }) => {
                 )}
                 <Button
                   size="sm"
-                  onClick={editMode ? handleUpdateQuantity : handleRemoveFromCart}
+                  onClick={
+                    editMode ? handleUpdateQuantity : handleRemoveFromCart
+                  }
                   disabled={loading}
                 >
                   {editMode ? "Update" : <DeleteIcon />}

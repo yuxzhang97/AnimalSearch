@@ -4,6 +4,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useRemoveFromCart, useUpdateCartItem } from "../services/cartServices";
 import { useUser } from "../contexts/UserContext";
 import { useGetUserCart } from "../services/cartServices";
+import { Link } from "react-router-dom";
 
 // Cart Item Component
 const CartItem = ({ item }) => {
@@ -18,7 +19,12 @@ const CartItem = ({ item }) => {
   const handleQuantityChange = async (newQuantity) => {
     setLoading(true);
     try {
-      await updateCartItem(userId, item.product._id, parseInt(newQuantity), refetch);
+      await updateCartItem(
+        userId,
+        item.product._id,
+        parseInt(newQuantity),
+        refetch
+      );
       setQuantity(newQuantity);
     } catch (error) {
       console.error("Error updating cart item:", error.message);
@@ -36,12 +42,12 @@ const CartItem = ({ item }) => {
     }
   };
 
-  const handleChangeInput = (event) =>{
-    if (!editMode){
-      setEditMode(true);      
+  const handleChangeInput = (event) => {
+    if (!editMode) {
+      setEditMode(true);
     }
     setQuantity(event.target.value);
-  }
+  };
   const handleUpdateQuantity = async () => {
     await handleQuantityChange(quantity);
     setEditMode(false);
@@ -74,12 +80,14 @@ const CartItem = ({ item }) => {
       width="100%"
     >
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
-        <Image
-          src={item.product.imageURL}
-          alt={item.product.name}
-          boxSize="80px"
-          mb="2"
-        />
+        <Link to={`/product/${item.product._id}`}>
+          <Image
+            src={item.product.imageURL}
+            alt={item.product.name}
+            boxSize="80px"
+            mb="2"
+          />
+        </Link>
         <Flex justifyContent="space-between" alignItems="center" width="100%">
           {loading ? (
             <Spinner size="sm" />
