@@ -8,6 +8,24 @@ const ADD_ORDER = gql`
     }
   }
 `;
+// Define the query for fetching user orders
+const GET_USER_ORDERS = gql`
+  query GetUserOrders($userId: ID!) {
+    getUserOrders(userId: $userId) {
+      _id
+      items {
+        product {
+          _id
+          name
+          price
+          imageURL
+        }
+        quantity
+      }
+      createdAt
+    }
+  }
+`;
 
 // Custom hook for adding an order
 export const useAddOrder = () => {
@@ -31,4 +49,23 @@ export const useAddOrder = () => {
   return { addOrder };
 };
 
-export default useAddOrder;
+// Custom hook for fetching user orders
+export const useGetUserOrders = () => {
+    const [getUserOrdersQuery, { loading, error, data }] = useQuery(GET_USER_ORDERS);
+  
+    const getUserOrders = async (userId) => {
+      try {
+        const { data } = await getUserOrdersQuery({
+          variables: { userId },
+        });
+        return data.getUserOrders;
+      } catch (error) {
+        console.error('Error fetching user orders:', error);
+        throw new Error('Error fetching user orders');
+      }
+    };
+  
+    return { loading, error, getUserOrders };
+  };
+
+  export { useAddOrder, useGetUserOrders };

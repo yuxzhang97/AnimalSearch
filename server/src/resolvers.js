@@ -62,6 +62,14 @@ const resolvers = {
         throw new Error(error.message);
       }
     },
+    getUserOrders: async (_, { userId }) => {
+      try {
+        const orders = await Order.find({ user: userId }).populate('items.product');
+        return orders;
+      } catch (error) {
+        throw new Error("Error fetching user orders");
+      }
+    },
   },
   Mutation: {
     // Mutation to update cart data

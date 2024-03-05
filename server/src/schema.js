@@ -72,6 +72,8 @@ const typeDefs = gql`
     getUser(userId: ID!): User
     "Query to get the cart and the product details for a user"
     getUserCart(userId: ID!): [Item]
+    "Query to get the orders for a given user"
+    getUserOrders(userId: ID!): [Order!]!
   }
 
   type Mutation {
