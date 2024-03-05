@@ -4,19 +4,7 @@ import { useMutation, gql } from '@apollo/client';
 const ADD_ORDER = gql`
   mutation AddOrder($userId: ID!, $items: [ItemInput!]!) {
     addOrder(userId: $userId, items: $items) {
-      _id
-      userId
-      items {
-        product {
-          _id
-          name
-          description
-          price
-          category
-          imageURL
-        }
-        quantity
-      }
+      _id      
     }
   }
 `;

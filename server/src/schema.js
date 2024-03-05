@@ -46,7 +46,7 @@ const typeDefs = gql`
     "The ID of the order"
     _id: ID!
     "The ID of the user who placed the order"
-    userId: ID!
+    user: User!
     "The array of items in the order"
     items: [Item!]!
   }

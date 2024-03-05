@@ -8,6 +8,7 @@ import NavBar from "../components/NavBar";
 import { CartProvider } from "../contexts/CartContext"; // Import CartProvider
 import Cart from "../components/Cart";
 import { UserProvider } from "../contexts/UserContext";
+import Checkout from "./Checkout";
 
 const Pages = () => {
   return (
@@ -20,6 +21,7 @@ const Pages = () => {
               <Route element={<Home />} path="/" />
               <Route element={<ProductDetails />} path="/product/:productId" />
               <Route element={<Account />} path="/account" />
+              <Route element={<Checkout />} path="/checkout" />
             </Routes>
             <Cart />
           </BrowserRouter>

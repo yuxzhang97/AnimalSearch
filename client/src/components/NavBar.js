@@ -12,6 +12,9 @@ const NavBar = () => {
         <Link to="/account">
           <Text color="white" fontWeight="bold" fontSize="xl">Account</Text>
         </Link>
+        <Link to="/checkout">
+          <Text color="white" fontWeight="bold" fontSize="xl">Checkout</Text>
+        </Link>
       </HStack>
     </Box>
   );

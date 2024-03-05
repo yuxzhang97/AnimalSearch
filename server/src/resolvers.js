@@ -195,7 +195,7 @@ const resolvers = {
         }
         // Create a new order object
         const order = new Order({
-          userId,
+          user: userId,
           items: items.map((item) => ({
             product: item.productId,
             quantity: item.quantity,
