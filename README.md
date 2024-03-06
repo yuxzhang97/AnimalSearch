@@ -1,6 +1,6 @@
-# Your Project Name
+# Quickbuy
 
-Brief description of your project.
+Quickbuy is a convenient online shopping app that offers a seamless shopping experience with a wide range of products, easy checkout, and fast delivery.
 
 ## Table of Contents
 
