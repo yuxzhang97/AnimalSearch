@@ -2,6 +2,8 @@ const Product = require("./models/Product");
 const User = require("./models/User");
 const Order = require("./models/Order");
 
+const { authenticateGoogle } = require("../utility/passport");
+
 const resolvers = {
   Query: {
     // Query to get all products in collection
@@ -64,7 +66,9 @@ const resolvers = {
     },
     getUserOrders: async (_, { userId }) => {
       try {
-        const orders = await Order.find({ user: userId }).populate('items.product');
+        const orders = await Order.find({ user: userId }).populate(
+          "items.product"
+        );
         return orders;
       } catch (error) {
         throw new Error("Error fetching user orders");
@@ -232,6 +236,79 @@ const resolvers = {
         return user;
       } catch (error) {
         throw new Error(error.message);
+      }
+    },
+    signUpGoogle: async (_, { accessToken }, ctx) => {
+      const { models, req, res } = ctx;
+      const { User } = models;
+    
+      req.body = {
+        ...req.body,
+        // eslint-disable-next-line
+        access_token: accessToken,
+      };
+    
+      try {
+        // Call authenticateGoogle with req and res objects
+        const { data, info } = await authenticateGoogle(req, res);
+        
+        console.log(data);
+        console.log(info);
+
+        // Optional we can also use getGoogleProfile to reterieve user informations
+        // const data = await getGoogleProfile(accessToken);
+        
+    
+        if (info) {
+          switch (info.code) {
+          case 'ETIMEDOUT':
+            throw new Error('Failed to reach Google: Try Again');
+          default:
+            throw new Error('something went wrong');
+          }
+        }
+        // If not Error take user information
+        const { _json } = data.profile;
+        // Deconstruct user information from _json data
+        const { email } = _json;
+        const firstName = _json.given_name;
+        const lastName = _json.family_name;
+    
+        let accessToken = '';
+        let refreshToken = '';
+        let message = '';
+    
+        // Check if user is registered
+        const userExist = await User.findOne({
+          where: {
+            email: email.toLowerCase().replace(/ /gi, ''),
+          },
+        });
+
+        if (!userExist) {
+          const newUser = await User.create({
+            email: email.toLowerCase().replace(/ /gi, ''),
+            firstName,
+            lastName,
+          });
+          // generate Token
+          // create a function that will generate token a sign it for you.
+          //accessToken = await generateToken(newUser.dataValues.id);
+          //refreshToken = await generateToken(newUser.dataValues.id, true);
+
+          return {
+            message, accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}`
+          };
+        }
+        // generate Token
+        //accessToken = await generateToken(userExist.dataValues.id);
+        //refreshToken = await generateToken(userExist.dataValues.id, true);
+
+        return {
+          message, accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}`
+        };
+      } catch (error) {
+        return error;
       }
     },
   },

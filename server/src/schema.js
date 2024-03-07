@@ -60,6 +60,12 @@ const typeDefs = gql`
     quantity: Int!
   }
 
+  type AuthResponse {
+    accessToken: String!
+    refreshToken: String!
+  }
+
+
   # Define the Query type with its fields
   type Query {
     "Query to retrieve all products"
@@ -74,7 +80,6 @@ const typeDefs = gql`
     getUserCart(userId: ID!): [Item]
     "Query to get the orders for a given user"
     getUserOrders(userId: ID!): [Order!]!
-    
   }
 
   type Mutation {
@@ -90,6 +95,8 @@ const typeDefs = gql`
     addOrder(userId: ID!, items: [ItemInput!]!): Order
     "Mutation to clear the cart of a user"
     clearUserCart(userId: ID!): User
+    #Mutation to sign up through google authentication
+    signUpGoogle(accessToken: String!): AuthResponse
   }
 `;
 
