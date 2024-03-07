@@ -68,9 +68,6 @@ async function startServer() {
   console.log(`🚀 Server ready at http://localhost:4000/`);
 }
 
-//Redirect root path to GraphQL Playground
-// app.get('/', (req, res) => {
-//   res.redirect('/graphql');
-// });
+
 // Start the HTTP server
 startServer();

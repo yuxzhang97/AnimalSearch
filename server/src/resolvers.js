@@ -252,8 +252,7 @@ const resolvers = {
         // Call authenticateGoogle with req and res objects
         const { data, info } = await authenticateGoogle(req, res);
         
-        console.log(data);
-        console.log(info);
+        //console.log(data);
 
         // Optional we can also use getGoogleProfile to reterieve user informations
         // const data = await getGoogleProfile(accessToken);
@@ -268,7 +267,7 @@ const resolvers = {
           }
         }
         // If not Error take user information
-        const { _json } = data.profile;
+        const { _json } = data;
         // Deconstruct user information from _json data
         const { email } = _json;
         const firstName = _json.given_name;
@@ -280,9 +279,7 @@ const resolvers = {
     
         // Check if user is registered
         const userExist = await User.findOne({
-          where: {
-            email: email.toLowerCase().replace(/ /gi, ''),
-          },
+          email: email.toLowerCase().replace(/ /gi, ''),
         });
 
         if (!userExist) {
