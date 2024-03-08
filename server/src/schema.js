@@ -23,8 +23,6 @@ const typeDefs = gql`
     firstName: String!
     "The user's last name"
     lastName: String!
-    "The user's username"
-    username: String!
     "The user's email address"
     email: String!
     "The user's password (should not be queried, only for mutation)"
