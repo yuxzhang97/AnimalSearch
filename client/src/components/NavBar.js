@@ -9,6 +9,9 @@ const NavBar = () => {
         <Link to="/">
           <Text color="white" fontWeight="bold" fontSize="xl">Home</Text>
         </Link>
+        <Link to="/login">
+          <Text color="white" fontWeight="bold" fontSize="xl">Log In</Text>
+        </Link>
         <Link to="/account">
           <Text color="white" fontWeight="bold" fontSize="xl">Account</Text>
         </Link>

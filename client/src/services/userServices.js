@@ -7,7 +7,6 @@ const GET_USER_BY_ID = gql`
       _id
       firstName
       lastName
-      username
       email
     }
   }
