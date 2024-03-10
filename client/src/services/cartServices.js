@@ -1,4 +1,4 @@
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { useQuery, gql, useMutation } from "@apollo/client";
 
 // GraphQL query for fetching the user's cart items
 const GET_USER_CART = gql`
@@ -26,10 +26,8 @@ const ADD_TO_CART = gql`
       _id
       firstName
       lastName
-      username
       email
       password
-      
     }
   }
 `;
@@ -38,14 +36,16 @@ const ADD_TO_CART = gql`
 //Known bug if you try to get the cart when you add the first of an item, it doesn't get it properly and it returns an error
 const UPDATE_CART_ITEM = gql`
   mutation UpdateCartItem($userId: ID!, $productId: ID!, $quantity: Int!) {
-    updateCartItem(userId: $userId, productId: $productId, quantity: $quantity) {
+    updateCartItem(
+      userId: $userId
+      productId: $productId
+      quantity: $quantity
+    ) {
       _id
       firstName
       lastName
-      username
       email
       password
-      
     }
   }
 `;
@@ -103,7 +103,7 @@ const MINUS_FROM_CART = gql`
 const CLEAR_USER_CART = gql`
   mutation ClearUserCart($userId: ID!) {
     clearUserCart(userId: $userId) {
-      _id      
+      _id
     }
   }
 `;
@@ -194,22 +194,29 @@ const useMinusFromCart = () => {
 };
 
 const useClearUserCart = () => {
-    const [clearUserCartMutation] = useMutation(CLEAR_USER_CART);
-  
-    const clearUserCart = async (userId, refetch) => {
-      try {
-        const { data } = await clearUserCartMutation({
-          variables: { userId },
-        });
-        await refetch(); // Refetch the cart
-        return data.clearUserCart;
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    };
-  
-    return clearUserCart;
+  const [clearUserCartMutation] = useMutation(CLEAR_USER_CART);
+
+  const clearUserCart = async (userId, refetch) => {
+    try {
+      const { data } = await clearUserCartMutation({
+        variables: { userId },
+      });
+      await refetch(); // Refetch the cart
+      return data.clearUserCart;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   };
 
+  return clearUserCart;
+};
+
 // Export the custom hooks for use in components
-export { useGetUserCart, useAddToCart, useUpdateCartItem, useRemoveFromCart, useMinusFromCart, useClearUserCart };
+export {
+  useGetUserCart,
+  useAddToCart,
+  useUpdateCartItem,
+  useRemoveFromCart,
+  useMinusFromCart,
+  useClearUserCart,
+};
