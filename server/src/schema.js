@@ -59,8 +59,10 @@ const typeDefs = gql`
   }
 
   type AuthResponse {
+    userId: ID!
     accessToken: String!
     refreshToken: String!
+    message: String
   }
 
 

@@ -245,78 +245,56 @@ const resolvers = {
     signUpGoogle: async (_, { accessToken }, ctx) => {
       const { models, req, res } = ctx;
       const { User } = models;
-
+    
       req.body = {
         ...req.body,
-        // eslint-disable-next-line
         access_token: accessToken,
       };
-
+    
       try {
         // Call authenticateGoogle with req and res objects
         const { data, info } = await authenticateGoogle(req, res);
-
-        //console.log(data);
-
-        // Optional we can also use getGoogleProfile to reterieve user informations
-        // const data = await getGoogleProfile(accessToken);
-
+    
         if (info) {
           switch (info.code) {
             case "ETIMEDOUT":
               throw new Error("Failed to reach Google: Try Again");
             default:
-              throw new Error("something went wrong");
+              throw new Error("Something went wrong");
           }
         }
-        // If not Error take user information
+        
+        // Extract user information from data
         const { _json } = data;
-        // Deconstruct user information from _json data
-        const { email } = _json;
-        const firstName = _json.given_name;
-        const lastName = _json.family_name;
-
-        let accessToken = "";
-        let refreshToken = "";
-        let message = "";
-
-        // Check if user is registered
-        const userExist = await User.findOne({
-          email: email.toLowerCase().replace(/ /gi, ""),
-        });
-
-        if (!userExist) {
-          const newUser = await User.create({
-            email: email.toLowerCase().replace(/ /gi, ""),
-            firstName,
-            lastName,
+        const { email, given_name, family_name } = _json;
+    
+        // Check if the user already exists in the database
+        let user = await User.findOne({ email: email.toLowerCase().trim() });
+    
+        if (!user) {
+          // Create a new user if not found
+          user = await User.create({
+            email: email.toLowerCase().trim(),
+            firstName: given_name,
+            lastName: family_name,
           });
-          // generate Token
-          // create a function that will generate token a sign it for you.
-          accessToken = generateAccessToken(user._id);
-          refreshToken = generateRefreshToken(user._id);
-          message = "New user signed up successfully";
-
-          return {
-            message,
-            accessToken: `Bearer ${accessToken}`,
-            refreshToken: `Bearer ${refreshToken}`,
-          };
         }
-        // generate Token
-        accessToken = generateAccessToken(userExist._id);
-        refreshToken = generateRefreshToken(userExist._id);
-        message = "User signed in successfully";
-
+        // Generate access and refresh tokens
+        const accessToken = generateAccessToken(user._id);
+        const refreshToken = generateRefreshToken(user._id);
+    
+        // Return user ID, access token, and refresh token
         return {
-          message,
+          userId: user._id,
           accessToken: `Bearer ${accessToken}`,
           refreshToken: `Bearer ${refreshToken}`,
+          message: user ? "User signed in successfully" : "New user signed up successfully",
         };
       } catch (error) {
         return error;
       }
     },
+    
   },
 };
 
