@@ -1,7 +1,8 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client'
-import Pages from './pages';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { createRoot } from 'react-dom/client';
+import Pages from './pages';
+
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000',

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Box, Center, Button, Spinner, Text } from "@chakra-ui/react";
 import { useUser } from "../contexts/UserContext";
-import { useGetUserCart } from "../services/cartServices";
+import { useGetUserCart, useClearUserCart } from "../services/cartServices";
 import { useAddOrder } from "../services/orderServices";
-import { useClearUserCart } from "../services/cartServices";
-import { Button, Center, Spinner, Box, Text } from "@chakra-ui/react";
 import CheckoutItem from "../components/CheckoutItem";
+
 
 const Checkout = () => {
   const { userId } = useUser(); // Get the current user from the context

@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import CartItem from "./CartItem";
-import { useGetUserCart } from "../services/cartServices";
 import { useUser } from "../contexts/UserContext";
+import { useGetUserCart } from "../services/cartServices";
 
 const Cart = () => {
   const { userId } = useUser();

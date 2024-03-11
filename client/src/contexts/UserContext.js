@@ -6,6 +6,7 @@ export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState("65e498b8630184bd51d65e32"); //hard coded user for testing
 
   const logIn = (id) => {
+    console.log("here");
     setUserId(id);
   };
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import { useUser } from '../contexts/UserContext';
 import { Box, Heading, Text } from '@chakra-ui/react';
+import { useUser } from '../contexts/UserContext';
 import useGetUserById from '../services/userServices';
+
 
 const Account = () => {
   const { userId } = useUser();

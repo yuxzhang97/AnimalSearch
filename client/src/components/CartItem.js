@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Flex, Image, Button, Select, Spinner, Input } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useRemoveFromCart, useUpdateCartItem } from "../services/cartServices";
 import { useUser } from "../contexts/UserContext";
-import { useGetUserCart } from "../services/cartServices";
-import { Link } from "react-router-dom";
+import { useGetUserCart, useRemoveFromCart, useUpdateCartItem } from "../services/cartServices";
+
 
 // Cart Item Component
 const CartItem = ({ item }) => {

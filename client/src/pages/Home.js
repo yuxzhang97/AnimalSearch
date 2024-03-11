@@ -12,7 +12,6 @@ const Home = () => {
   
 
   useEffect(() => {
-    // Fetch the top 10 items only once when the component mounts
     searchProducts("");
   }, []); 
 
