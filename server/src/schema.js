@@ -25,8 +25,8 @@ const typeDefs = gql`
     lastName: String!
     "The user's email address"
     email: String!
-    "The user's password (should not be queried, only for mutation)"
-    password: String!
+    "The user's password (should not be queried, only for mutation) can be null if using OAuth"
+    password: String
     "The user's cart containing cart items"
     cart: [Item!]!
   }
